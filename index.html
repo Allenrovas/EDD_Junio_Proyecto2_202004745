@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moviecats</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="styles/estilos.css"> 
+    <link rel="shortcut icon" href="assets/Titulo.png"/>
+</head>
+<body>
+    <!-- LOGIN -->
+    <div id="Login" class="Login" style="display: block;">
+        <br>
+        <div class="form-login">
+            <h5>Login Moviecats</h5>
+            <input class="controls" type="text" name="usuarioLogin" id="usuarioLogin" value="" placeholder="Usuario">
+            <input class="controls" type="password" name="usuarioContra" id="usuarioContra" value="" placeholder="Contraseña">        
+            <label class="h6"><input class="btn btn-primary btn-xl text-uppercase" type="checkbox" name=""  id="btn_administrador"></input> Administrador</label><br><br>
+            <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_login">Ingresar</button>
+            <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_regresar">Regresar</button>
+        </div>
+    </div>
+
+    <!-- ADMINISTRACION -->
+
+    <div id="Administracion" style="display: block;">
+
+        <section class="form-administracion">
+            <div class="lbl-menu"> 
+                <label for="radio1">Cargas Masivas</label>
+                <label for="radio2">Operaciones Blockchain</label>
+            </div>
+            <div class="content">
+                <input type="radio" name="radio" id="radio1">
+                <div class="tab1">
+                    <h2>Cargas Masivas</h2>
+                    <section class="form-administracion-secundario">
+                        <h5>Carga Masiva Usuarios</h5>
+                    </section>
+                </div>
+                <input type="radio" name="radio" id="radio2">
+                <div class="tab2">
+                    <h2>Operaciones Blockchain</h2>
+                    <section class="form-blockchain">
+                        <h5>Op</h5>
+                    </section>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+
+</body>
+</html>

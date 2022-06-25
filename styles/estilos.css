@@ -1,0 +1,305 @@
+body {
+    margin: 0;
+    font-family: var(--bs-body-font-family);
+    font-size: var(--bs-body-font-size);
+    font-weight: var(--bs-body-font-weight);
+    line-height: var(--bs-body-line-height);
+    color: var(--bs-body-color);
+    text-align: var(--bs-body-text-align);
+    background-color: var(--bs-body-bg);
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+  
+  hr {
+    margin: 1rem 0;
+    color: inherit;
+    background-color: currentColor;
+    border: 0;
+    opacity: 0.25;
+  }
+  
+  hr:not([size]) {
+    height: 1px;
+  }
+  
+  h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  
+  h1, .h1 {
+    font-size: calc(1.375rem + 1.5vw);
+  }
+  @media (min-width: 1200px) {
+    h1, .h1 {
+      font-size: 2.5rem;
+    }
+  }
+  
+  h2, .h2 {
+    font-size: calc(1.325rem + 0.9vw);
+  }
+  @media (min-width: 1200px) {
+    h2, .h2 {
+      font-size: 2rem;
+    }
+  }
+  
+  h3, .h3 {
+    font-size: calc(1.3rem + 0.6vw);
+  }
+  @media (min-width: 1200px) {
+    h3, .h3 {
+      font-size: 1.75rem;
+    }
+  }
+  
+  h4, .h4 {
+    font-size: calc(1.275rem + 0.3vw);
+  }
+  @media (min-width: 1200px) {
+    h4, .h4 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  h5, .h5 {
+    font-size: 1.25rem;
+  }
+  
+  h6, .h6 {
+    font-size: 1rem;
+  }
+  
+  p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    }
+    td, th {
+    font-family: bahnschrift;
+    border: 1px solid #4e4d4d;
+    text-align: center;
+    padding: 8px;
+    }
+    tbody{
+      font-family: bahnschrift;
+      font-size: 12px;
+      color : #4e4d4d;
+      background: 1px solid #4e4d4d;
+      text-align: center;
+      padding: 8px;
+    }
+  
+
+  
+  .form-login {
+    width: 450px;
+    height: 330px;
+    background: #4e4d4d;
+    margin: auto;
+    margin-top: 180px;
+    box-shadow: 7px 13px 37px #000;
+    padding: 20px 30px;
+    border-top: 4px solid #cca000;
+    color: white;
+  }
+
+  .Login {
+    background-image: url("../imagenes/Backgroun_Login.png");
+    background-size: cover; 
+    width: 1877px;
+    height: 970px;
+  }
+
+  .form-administracion {
+    width: 1200px;
+    height: 3300px;
+    background: #4e4d4d;
+    margin: auto;
+    margin-top: 50px;
+    box-shadow: 7px 13px 37px #000;
+    padding: 20px 30px;
+    border-top: 4px solid #cca000;
+    color: white;
+  }
+
+  .content{
+    
+    position: relative;
+  }
+  .content div{
+    position: absolute;
+    line-height: 1.8;
+    transition: all 600ms ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.90);
+    padding: 30px;
+    background: #4e4d4d;
+    padding-bottom: 40px;
+  }
+
+  .form-usuario {
+    width: 1200px;
+    height: 500px;
+    background: #4e4d4d;
+    margin: auto;
+    margin-top: 50px;
+    box-shadow: 7px 13px 37px #000;
+    padding: 20px 30px;
+    border-top: 4px solid #cca000;
+    color: white;
+  }
+  
+  .form-login h5 {
+    margin: 0;
+    text-align: center;
+    height: 40px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid;
+    font-size: 20px;
+  }
+  
+  .controls {
+    width: 100%;
+    border: 1px solid #cca000;
+    margin-bottom: 15px;
+    padding: 11px 10px;
+    background: white;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .buttons {
+    width: 100%;
+    height: 40px;
+    background: #cca000;
+    border: none;
+    color: white;
+    margin-bottom: 16px;
+  }
+  
+
+  
+  .form-login p{
+    height: 40px;
+    text-align: center;
+    border-bottom: 1px solid;
+  }
+  
+  .form-login a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .form-login a:hover {
+    text-decoration: underline;
+  }
+
+  .btn-primary {
+    color: #fff;
+    background-color: #ffc800;
+    border-color: #ffc800;
+  }
+  .btn-primary:hover {
+    color: #fff;
+    background-color: #d9aa00;
+    border-color: #cca000;
+  }
+  .btn-check:focus + .btn-primary, .btn-primary:focus {
+    color: #fff;
+    background-color: #d9aa00;
+    border-color: #cca000;
+    box-shadow: 0 0 0 0.25rem rgba(255, 208, 38, 0.5);
+  }
+  .btn-check:checked + .btn-primary, .btn-check:active + .btn-primary, .btn-primary:active, .btn-primary.active, .show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #cca000;
+    border-color: #bf9600;
+  }
+  .btn-check:checked + .btn-primary:focus, .btn-check:active + .btn-primary:focus, .btn-primary:active:focus, .btn-primary.active:focus, .show > .btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 208, 38, 0.5);
+  }
+  .btn-primary:disabled, .btn-primary.disabled {
+    color: #fff;
+    background-color: #ffc800;
+    border-color: #ffc800;
+  }
+
+  .text-uppercase {
+    text-transform: uppercase !important;
+  }
+
+  .btn-xl {
+    padding: 1.25rem 2.5rem;
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+
+  .lbl-menu{
+    background: #ffc800;
+  }
+
+  .lbl-menu label{
+    display: inline-block;
+    padding: 20px;
+    color: white;
+    cursor: pointer;
+    transition: all 400ms ease;
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    
+  }
+
+  .lbl-menu label:hover{
+    background: #d9aa00;
+  }
+  #radio1,#radio2{
+    display: none;
+  }
+
+  #radio1:checked ~ .tab1{
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+  }
+
+  #radio2:checked ~ .tab2{
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+  }
+
+  .content div::after{
+    position: absolute;
+    content: "";
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #4e4d4d;
+    border-top: 10px solid transparent;
+    bottom: 100%;
+    left: 28px;
+  }
+
+  .content .tab2:after{
+    left: 250px;
+  }
+
+  
