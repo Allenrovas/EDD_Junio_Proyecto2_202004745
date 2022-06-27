@@ -1,5 +1,4 @@
 //AVL Peliculas
-
 class Nodo_Pelicula {
     constructor(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q) {
         this.id_pelicula = id_pelicula;
@@ -55,4 +54,227 @@ class Nodo_Pelicula {
         }
         return etiqueta;
     }
+}
+
+class Arbol_AVL{
+    constructor(){
+        this.raiz = null;
+    }
+
+    insertar(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q){
+        this.raiz = this.insertarNodo(this.raiz,id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q);
+    }
+
+    insertarNodo(nodo,id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q){
+        if(nodo === null){
+            nodo = new Nodo_Pelicula(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q);
+        }else if(id_pelicula<nodo.id_pelicula){
+            nodo.izquierdo = this.insertarNodo(nodo.izquierdo,id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q);
+            if(this.altura(nodo.derecho)-this.altura(nodo.izquierdo)== -2){
+                if(id_pelicula<nodo.izquierdo.id_pelicula){
+                    nodo = this.IzquierdaIzquierda(nodo);
+                }else{
+                    nodo = this.IzquierdaDerecha(nodo);
+                }
+            }
+        }else if(id_pelicula>nodo.id_pelicula){
+            nodo.derecho = this.insertarNodo(nodo.derecho,id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q);
+            if(this.altura(nodo.derecho)-this.altura(nodo.izquierdo)== 2){
+                if(id_pelicula>nodo.derecho.id_pelicula){
+                    nodo = this.DerechaDerecha(nodo);
+                }else{
+                    nodo = this.DerechaIzquierda(nodo);
+                }
+            }
+        }else{
+            console.log("No se puede insertar un nodo con el mismo id");
+        }
+        nodo.altura = mayor(this.altura(nodo.izquierdo),this.altura(nodo.derecho))+1;
+    }
+
+    altura(nodo){
+        if(nodo === null){
+            return -1;
+        }else{
+            return nodo.altura;
+        }
+    }
+
+    mayor(a,b){
+        if(a>b){
+            return a;
+        }else{
+            return b;
+        }
+    }
+
+    IzquierdaIzquierda(nodo){
+        var Nodo2 = nodo.izquierdo;
+        nodo.izquierdo = Nodo2.derecho;
+        Nodo2.derecho = nodo;
+        nodo.altura = mayor(this.altura(nodo.izquierdo),this.altura(nodo.derecho))+1;
+        Nodo2.altura = mayor(this.altura(Nodo2.izquierdo),nodo.altura)+1;
+        return Nodo2;
+    }
+
+    DerechaDerecha(nodo){
+        var Nodo2 = nodo.derecho;
+        nodo.derecho = Nodo2.izquierdo;
+        Nodo2.izquierdo = nodo;
+        nodo.altura = mayor(this.altura(nodo.izquierdo),this.altura(nodo.derecho))+1;
+        Nodo2.altura = mayor(this.altura(Nodo2.derecho),nodo.altura)+1;
+        return Nodo2;
+    }
+
+    IzquierdaDerecha(nodo){
+        nodo.izquierdo = DerechaDerecha(nodo.izquierdo);
+        return IzquierdaIzquierda(nodo);
+    }
+
+    DerechaIzquierda(nodo){
+        nodo.derecho = IzquierdaIzquierda(nodo.derecho);
+        return DerechaDerecha(nodo);
+    }
+
+    graficar(){
+        var actual;
+        actual = this.raiz;
+        var hola = actual.obtenerGraphivz();
+        d3.select("#Arbol_AVL").graphviz()
+            .width(1200)
+            .height(900)
+            .renderDot(hola)
+    }
+}
+
+//Lista Simple Clientes
+class Nodo_Cliente{
+    constructor(dpi,nombre_completo,nombre_usuario,correo,contrasenia,telefono){
+        this.dpi = dpi;
+        this.nombre_completo = nombre_completo;
+        this.nombre_usuario = nombre_usuario;
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+        this.telefono = telefono;
+        this.siguiente = null;
+    }
+}
+
+class ListaSimple{
+    constructor(){
+        this.primero = null;
+    }
+
+    insertarCliente(dpi,nombre_completo,nombre_usuario,correo,contrasenia,telefono){
+        var temporal = new Nodo_Cliente(dpi,nombre_completo,nombre_usuario,correo,contrasenia,telefono);
+        temporal.siguiente = this.primero;
+        this.primero = temporal;
+    }
+
+    graficar(){
+        var contenido = "";
+        contenido+= "digraph G {\n"+
+        'bgcolor=\"none\" layout=dot label="Lista_Libros" \n'+
+        "node [shape=square,fontname=\"Century Gothic\", style=filled, color=black, fillcolor=\"#f0b35d\"];\n"
+
+        var actual = this.primero;
+        var nombreNodos = "";
+        var conexiones = "";
+        while(actual!=null){
+            nombreNodos += "nodo"+actual.dpi+'[label=\"'+"Nombre: "+actual.nombre+'\n"];\n';
+            if(actual.siguiente != null){
+                conexiones += "nodo"+actual.dpi+"->nodo"+actual.siguiente.dpi+";\n";
+            }    
+            actual = actual.siguiente;
+        }
+        contenido += nombreNodos;
+        contenido += conexiones;
+        contenido += "rankdir=LR;\n}";
+        d3.select("#Lista_Clientes").graphviz()
+            .width(1200)
+            .height(900)
+            .renderDot(contenido)
+    }
+}
+
+//Arbol Binario Actores
+class Actor{
+    constructor(dni,nombre_actor,correo,descripcion){
+        this.dni = dni;
+        this.nombre_actor = nombre_actor;
+        this.correo = correo;
+        this.descripcion = descripcion;
+        this.izquierda = null;
+        this.derecha = null;
+    }
+
+    insertar(dni,nombre_actor,correo,descripcion){
+        if(dni<this.dni){
+            if(this.izquierda == null){
+                this.izquierda = new Actor(dni,nombre_actor,correo,descripcion);
+            }else{
+                this.izquierda.insertar(dni,nombre_actor,correo,descripcion);
+            }
+        }else if(dni>this.dni){
+            if(this.derecha == null){
+                this.derecha = new Actor(dni,nombre_actor,correo,descripcion);
+            }else{
+                this.derecha.insertar(dni,nombre_actor,correo,descripcion);
+            }
+        }else{
+            console.log("El actor ya existe");
+        }
+    }
+
+    obtenerGraphivz(){
+        return "digraph grafica{\n" +
+               'rankdir=TB;\n label="Arbol Binario Autores";\nfontsize="50";\n bgcolor="none";\n' +
+               'node [ style=filled , fillcolor=darkgoldenrod2];\n'+
+                this.getCodigoInterno()+
+                "}\n";
+    }
+       
+    getCodigoInterno(){
+        var etiqueta = "";
+        if(this.izquierda==null && this.derecha==null){
+            etiqueta="nodo"+this.dni+" [ label =\""+this.nombre_actor+"\"];\n";
+        }else{
+            etiqueta="nodo"+this.dni+" [ label =\""+this.nombre_actor+"\"];\n";
+        }
+        if(this.izquierda!=null){
+            etiqueta=etiqueta + this.izquierda.getCodigoInterno() +
+               "nodo"+this.dni+"->nodo"+this.izquierda.dni+"\n";
+        }
+        if(this.derecha!=null){
+            etiqueta=etiqueta + this.derecha.getCodigoInterno() +
+               "nodo"+this.dni+"->nodo"+this.derecha.dni+"\n";                    
+        }
+        return etiqueta;
+    }
+    
+}
+
+class Arbol{
+    constructor(){
+        this.raiz = null;
+    }
+
+    insertar(dni,nombre_actor,correo,descripcion){
+        if(this.raiz == null){
+            this.raiz = new Actor(dni,nombre_actor,correo,descripcion);
+        }else{
+            this.raiz.insertar(dni,nombre_actor,correo,descripcion);
+        }
+    }
+
+    graficarArbol(){
+        var actual;
+        actual = this.raiz;
+        var hola = actual.obtenerGraphivz();
+        d3.select("#Arbol_Binario").graphviz()
+            .width(1200)
+            .height(900)
+            .renderDot(hola)
+    } 
+
 }
