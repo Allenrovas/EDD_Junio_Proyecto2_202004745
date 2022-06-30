@@ -39,18 +39,18 @@ class Nodo_Pelicula {
 
     getCodigoInterno(){
         var etiqueta = "";
-        if(this.izquierda==null && this.derecha==null){
+        if(this.izquierdo==null && this.derecho==null){
             etiqueta="nodo"+this.id_pelicula+" [ label =\""+this.nombre_pelicula+"\"];\n";
         }else{
             etiqueta="nodo"+this.id_pelicula+" [ label =\""+this.nombre_pelicula+"\"];\n";
         }
-        if(this.izquierda!=null){
-            etiqueta=etiqueta + this.izquierda.getCodigoInterno() +
-               "nodo"+this.id_pelicula+"->nodo"+this.izquierda.id_pelicula+"\n";
+        if(this.izquierdo!=null){
+            etiqueta=etiqueta + this.izquierdo.getCodigoInterno() +
+               "nodo"+this.id_pelicula+"->nodo"+this.izquierdo.id_pelicula+"\n";
         }
-        if(this.derecha!=null){
-            etiqueta=etiqueta + this.derecha.getCodigoInterno() +
-               "nodo"+this.id_pelicula+"->nodo"+this.derecha.id_pelicula+"\n";                    
+        if(this.derecho!=null){
+            etiqueta=etiqueta + this.derecho.getCodigoInterno() +
+               "nodo"+this.id_pelicula+"->nodo"+this.derecho.id_pelicula+"\n";                    
         }
         return etiqueta;
     }
@@ -89,7 +89,7 @@ class Arbol_AVL{
         }else{
             console.log("No se puede insertar un nodo con el mismo id");
         }
-        nodo.altura = mayor(this.altura(nodo.izquierdo),this.altura(nodo.derecho))+1;
+        nodo.altura = this.mayor(this.altura(nodo.izquierdo),this.altura(nodo.derecho))+1;
     }
 
     altura(nodo){
@@ -112,8 +112,8 @@ class Arbol_AVL{
         var Nodo2 = nodo.izquierdo;
         nodo.izquierdo = Nodo2.derecho;
         Nodo2.derecho = nodo;
-        nodo.altura = mayor(this.altura(nodo.izquierdo),this.altura(nodo.derecho))+1;
-        Nodo2.altura = mayor(this.altura(Nodo2.izquierdo),nodo.altura)+1;
+        nodo.altura = this.mayor(this.altura(nodo.izquierdo),this.altura(nodo.derecho))+1;
+        Nodo2.altura = this.mayor(this.altura(Nodo2.izquierdo),nodo.altura)+1;
         return Nodo2;
     }
 
@@ -121,19 +121,19 @@ class Arbol_AVL{
         var Nodo2 = nodo.derecho;
         nodo.derecho = Nodo2.izquierdo;
         Nodo2.izquierdo = nodo;
-        nodo.altura = mayor(this.altura(nodo.izquierdo),this.altura(nodo.derecho))+1;
-        Nodo2.altura = mayor(this.altura(Nodo2.derecho),nodo.altura)+1;
+        nodo.altura = this.mayor(this.altura(nodo.izquierdo),this.altura(nodo.derecho))+1;
+        Nodo2.altura = this.mayor(this.altura(Nodo2.derecho),nodo.altura)+1;
         return Nodo2;
     }
 
     IzquierdaDerecha(nodo){
-        nodo.izquierdo = DerechaDerecha(nodo.izquierdo);
-        return IzquierdaIzquierda(nodo);
+        nodo.izquierdo = this.DerechaDerecha(nodo.izquierdo);
+        return this.IzquierdaIzquierda(nodo);
     }
 
     DerechaIzquierda(nodo){
-        nodo.derecho = IzquierdaIzquierda(nodo.derecho);
-        return DerechaDerecha(nodo);
+        nodo.derecho = this.IzquierdaIzquierda(nodo.derecho);
+        return this.DerechaDerecha(nodo);
     }
 
     graficar(){
@@ -169,6 +169,15 @@ class ListaSimple{
         var temporal = new Nodo_Cliente(dpi,nombre_completo,nombre_usuario,correo,contrasenia,telefono);
         temporal.siguiente = this.primero;
         this.primero = temporal;
+    }
+
+    recorrerMenu(usuario,contrasenia){
+        var actual = this.primero;
+        while(actual!==null){
+            if(actual.nombre_usuario === usuario && actual.contrasenia === contrasenia){
+                return actual;
+            }
+        }
     }
 
     graficar(){
@@ -277,4 +286,37 @@ class Arbol{
             .renderDot(hola)
     } 
 
+}
+
+
+var listaClientes = new ListaSimple();
+var arbolAcotres = new Arbol();
+var Peliculas_arbol = new Arbol_AVL();
+
+document.getElementById('masivaPeliculas').addEventListener('change', leerArchivoPeliculas, false);
+document.getElementById('masivaClientes').addEventListener('change', leerArchivoClientes, false);
+document.getElementById('masivaActores').addEventListener('change', leerArchivoActores, false);
+document.getElementById('masivaCategorias').addEventListener('change', leerArchivoCategorias, false);
+
+document.getElementById("btn_login").onclick = function(){
+    var nombre_usuario = document.getElementById("usuarioLogin").value;
+    var contrasenia = document.getElementById("usuarioContra").value;
+    var usuario = listaClientes.recorrerMenu(nombre_usuario,contrasenia);
+    if(usuario != null){
+        document.getElementById("PaginaUsuario").style.display="block";
+        document.getElementById("Login").style.display="none";
+    }else{
+        alert("Usuario o contraseña incorrectos");
+    }
+}
+
+document.getElementById("btn_administrador").onclick = function(){
+    var nombre_usuario = document.getElementById("usuarioLogin").value;
+    var contrasenia = document.getElementById("usuarioContra").value;
+    if (nombre_usuario == "EDD" && contrasenia == "123"){
+        document.getElementById("Administracion").style.display="block";
+        document.getElementById("Login").style.display="none";
+    }else{
+        alert("Usuario o contraseña de administrador incorrectos");
+    }
 }
