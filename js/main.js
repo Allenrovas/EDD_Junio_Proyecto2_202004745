@@ -13,13 +13,13 @@ class Nodo_Pelicula {
 
     insertar(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q) {
         if(id_pelicula < this.id_pelicula) {
-            if(this.izquierdo === null) {
+            if(this.izquierdo == null) {
                 this.izquierdo = new Nodo_Pelicula(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q);
             } else {
-                this.izquierdo.insertar(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q);
+                this.izquierdo.insertar(id_pelicula);
             }
         }else if(id_pelicula > this.id_pelicula) {
-            if(this.derecho === null) {
+            if(this.derecho == null) {
                 this.derecho = new Nodo_Pelicula(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q);
             } else {
                 this.derecho.insertar(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q);
@@ -31,7 +31,7 @@ class Nodo_Pelicula {
 
     obtenerGraphviz(){
         return "digraph grafica{\n" +
-               'rankdir=TB;\n label="Arbol Binario Autores";\nfontsize="50";\n bgcolor="none";\n' +
+               'rankdir=TB;\n label="Arbol AVL";\nfontsize="50";\n bgcolor="none";\n' +
                'node [ style=filled , fillcolor=darkgoldenrod2];\n'+
                 this.getCodigoInterno()+
                 "}\n";
@@ -40,9 +40,9 @@ class Nodo_Pelicula {
     getCodigoInterno(){
         var etiqueta = "";
         if(this.izquierdo==null && this.derecho==null){
-            etiqueta="nodo"+this.id_pelicula+" [ label =\""+this.nombre_pelicula+"\"];\n";
+            etiqueta="nodo"+this.id_pelicula+'[ label =\"nombre:'+this.nombre_pelicula+'\n'+'id:'+this.id_pelicula+'"];\n';
         }else{
-            etiqueta="nodo"+this.id_pelicula+" [ label =\""+this.nombre_pelicula+"\"];\n";
+            etiqueta="nodo"+this.id_pelicula+'[ label =\"nombre:'+this.nombre_pelicula+'\n'+'id:'+this.id_pelicula+'"];\n';
         }
         if(this.izquierdo!=null){
             etiqueta=etiqueta + this.izquierdo.getCodigoInterno() +
@@ -59,6 +59,7 @@ class Nodo_Pelicula {
 class Arbol_AVL{
     constructor(){
         this.raiz = null;
+        this.altura1 = 0;
     }
 
     insertar(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q){
@@ -66,85 +67,98 @@ class Arbol_AVL{
     }
 
     insertarNodo(nodo,id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q){
-        if(nodo === null){
+        if(nodo == null){
             nodo = new Nodo_Pelicula(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q);
         }else if(id_pelicula<nodo.id_pelicula){
             nodo.izquierdo = this.insertarNodo(nodo.izquierdo,id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q);
             if(this.altura(nodo.derecho)-this.altura(nodo.izquierdo)== -2){
                 if(id_pelicula<nodo.izquierdo.id_pelicula){
-                    nodo = this.IzquierdaIzquierda(nodo);
+                    nodo = this.rotacionizquierda(nodo);
                 }else{
-                    nodo = this.IzquierdaDerecha(nodo);
+                    nodo = this.Rotaciondobleizquierda(nodo);
                 }
             }
         }else if(id_pelicula>nodo.id_pelicula){
             nodo.derecho = this.insertarNodo(nodo.derecho,id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q);
             if(this.altura(nodo.derecho)-this.altura(nodo.izquierdo)== 2){
                 if(id_pelicula>nodo.derecho.id_pelicula){
-                    nodo = this.DerechaDerecha(nodo);
+                    nodo = this.rotacionderecha(nodo);
                 }else{
-                    nodo = this.DerechaIzquierda(nodo);
+                    nodo = this.Rotaciondoblederecha(nodo);
                 }
             }
         }else{
             console.log("No se puede insertar un nodo con el mismo id");
         }
         nodo.altura = this.mayor(this.altura(nodo.izquierdo),this.altura(nodo.derecho))+1;
+        return nodo;
     }
 
     altura(nodo){
-        if(nodo === null){
-            return -1;
-        }else{
-            return nodo.altura;
-        }
+        if(nodo == null) return -1;
+        return nodo.altura;
     }
 
-    mayor(a,b){
-        if(a>b){
-            return a;
-        }else{
-            return b;
-        }
+    mayor(valor1,valor2){
+        if(valor1>valor2) return valor1;
+        return valor2;
     }
 
-    IzquierdaIzquierda(nodo){
-        var Nodo2 = nodo.izquierdo;
-        nodo.izquierdo = Nodo2.derecho;
-        Nodo2.derecho = nodo;
-        nodo.altura = this.mayor(this.altura(nodo.izquierdo),this.altura(nodo.derecho))+1;
-        Nodo2.altura = this.mayor(this.altura(Nodo2.izquierdo),nodo.altura)+1;
-        return Nodo2;
+    rotacionizquierda(nodo){
+        var aux = nodo.izquierdo;
+        nodo.izquierdo = aux.derecho;
+        aux.derecho = nodo;
+        //calculo de nueva altura
+        nodo.altura = this.mayor(this.altura(nodo.derecho),this.altura(nodo.izquierdo))+1;
+        aux.altura = this.mayor(this.altura(nodo.izquierdo), nodo.altura)+1;
+        return aux;
+    }
+    rotacionderecha(nodo){
+        var aux = nodo.derecho;
+        nodo.derecho = aux.izquierdo;
+        aux.izquierdo = nodo;
+        //calcular de nuevo altura
+        nodo.altura = this.mayor(this.altura(nodo.derecho),this.altura(nodo.izquierdo))+1;
+        aux.altura = this.mayor(this.altura(nodo.derecho),nodo.altura)+1;
+        return aux;
+    }
+    //rotacion dobles derecha
+    Rotaciondoblederecha(nodo){
+        nodo.derecho = this.rotacionizquierda(nodo.derecho);
+        return this.rotacionderecha(nodo);
     }
 
-    DerechaDerecha(nodo){
-        var Nodo2 = nodo.derecho;
-        nodo.derecho = Nodo2.izquierdo;
-        Nodo2.izquierdo = nodo;
-        nodo.altura = this.mayor(this.altura(nodo.izquierdo),this.altura(nodo.derecho))+1;
-        Nodo2.altura = this.mayor(this.altura(Nodo2.derecho),nodo.altura)+1;
-        return Nodo2;
+    //rotaciones dobles
+    Rotaciondobleizquierda(nodo){
+        nodo.izquierdo = this.rotacionderecha(nodo.izquierdo);
+        return this.rotacionizquierda(nodo);
     }
 
-    IzquierdaDerecha(nodo){
-        nodo.izquierdo = this.DerechaDerecha(nodo.izquierdo);
-        return this.IzquierdaIzquierda(nodo);
-    }
-
-    DerechaIzquierda(nodo){
-        nodo.derecho = this.IzquierdaIzquierda(nodo.derecho);
-        return this.DerechaDerecha(nodo);
-    }
 
     graficar(){
         var actual;
         actual = this.raiz;
-        var hola = actual.obtenerGraphivz();
+        var hola = actual.obtenerGraphviz();
+        console.log(hola);
         d3.select("#Arbol_AVL").graphviz()
-            .width(1200)
-            .height(900)
+            .zoom(false)
             .renderDot(hola)
+
     }
+
+    postOrden(){
+        this.postOrdenNodo(this.raiz);
+    }
+    postOrdenNodo(nodo){
+        if (nodo != null){
+            
+            this.postOrdenNodo(nodo.izquierdo);
+            
+            console.log(nodo.id_pelicula);
+            this.postOrdenNodo(nodo.derecho);
+        }
+    }
+
 }
 
 //Lista Simple Clientes
@@ -173,7 +187,7 @@ class ListaSimple{
 
     recorrerMenu(usuario,contrasenia){
         var actual = this.primero;
-        while(actual!==null){
+        while(actual!=null){
             if(actual.nombre_usuario === usuario && actual.contrasenia === contrasenia){
                 return actual;
             }
@@ -183,14 +197,14 @@ class ListaSimple{
     graficar(){
         var contenido = "";
         contenido+= "digraph G {\n"+
-        'bgcolor=\"none\" layout=dot label="Lista_Libros" \n'+
-        "node [shape=square,fontname=\"Century Gothic\", style=filled, color=black, fillcolor=\"#f0b35d\"];\n"
+        'bgcolor=\"none\" layout=dot label="Lista_Clientes" \n'+
+        "node [shape=square,fontname=\"Century Gothic\", style=filled, color=black, fillcolor=\"darkgoldenrod2\"];\n"
 
         var actual = this.primero;
         var nombreNodos = "";
         var conexiones = "";
         while(actual!=null){
-            nombreNodos += "nodo"+actual.dpi+'[label=\"'+"Nombre: "+actual.nombre+'\n"];\n';
+            nombreNodos += "nodo"+actual.dpi+'[label=\"'+"Nombre: "+actual.nombre_completo+'\n"];\n';
             if(actual.siguiente != null){
                 conexiones += "nodo"+actual.dpi+"->nodo"+actual.siguiente.dpi+";\n";
             }    
@@ -200,8 +214,7 @@ class ListaSimple{
         contenido += conexiones;
         contenido += "rankdir=LR;\n}";
         d3.select("#Lista_Clientes").graphviz()
-            .width(1200)
-            .height(900)
+            .zoom(false)
             .renderDot(contenido)
     }
 }
@@ -237,7 +250,7 @@ class Actor{
 
     obtenerGraphivz(){
         return "digraph grafica{\n" +
-               'rankdir=TB;\n label="Arbol Binario Autores";\nfontsize="50";\n bgcolor="none";\n' +
+               'rankdir=TB;\n label="Arbol Binario Actores";\nfontsize="50";\n bgcolor="none";\n' +
                'node [ style=filled , fillcolor=darkgoldenrod2];\n'+
                 this.getCodigoInterno()+
                 "}\n";
@@ -281,9 +294,8 @@ class Arbol{
         actual = this.raiz;
         var hola = actual.obtenerGraphivz();
         d3.select("#Arbol_Binario").graphviz()
-            .width(1200)
-            .height(900)
             .renderDot(hola)
+            .zoom(false);
     } 
 
 }
@@ -319,4 +331,83 @@ document.getElementById("btn_administrador").onclick = function(){
     }else{
         alert("Usuario o contraseña de administrador incorrectos");
     }
+}
+
+function leerArchivoPeliculas(e) {
+    var archivo = e.target.files[0];
+    if (!archivo) {
+      return;
+    }
+    var lector = new FileReader();
+    lector.onload = function(e) {
+        var contenido = e.target.result;
+        CargarPeliculas(contenido);
+    };
+    lector.readAsText(archivo);
+}
+
+function leerArchivoClientes(e) {
+    var archivo = e.target.files[0];
+    if (!archivo) {
+      return;
+    }
+    var lector = new FileReader();
+    lector.onload = function(e) {
+        var contenido = e.target.result;
+        CargarClientes(contenido);
+    };
+    lector.readAsText(archivo);
+}
+
+function leerArchivoActores(e) {
+    var archivo = e.target.files[0];
+    if (!archivo) {
+      return;
+    }
+    var lector = new FileReader();
+    lector.onload = function(e) {
+        var contenido = e.target.result;
+        CargarActores(contenido);
+    };
+    lector.readAsText(archivo);
+}
+
+function leerArchivoCategorias(e) {
+    var archivo = e.target.files[0];
+    if (!archivo) {
+      return;
+    }
+    var lector = new FileReader();
+    lector.onload = function(e) {
+        var contenido = e.target.result;
+        CargarCategorias(contenido);
+    };
+    lector.readAsText(archivo);
+}
+
+function CargarClientes(contenido){
+    var datos = JSON.parse(contenido);
+    for (var i = 0; i < datos.length; i++) {
+        listaClientes.insertarCliente(datos[i].dpi,datos[i].nombre_completo,datos[i].nombre_usuario,datos[i].correo,datos[i].contrasenia,datos[i].telefono);
+    }
+    listaClientes.graficar();
+    alert("Usuarios cargados");
+}
+
+function CargarPeliculas(contenido){
+    var datos = JSON.parse(contenido);
+    for (var i = 0; i < datos.length; i++) {
+        Peliculas_arbol.insertar(datos[i].id_pelicula,datos[i].nombre_pelicula,datos[i].descripcion,datos[i].puntuacion_star,datos[i].precio_Q);
+    }
+    alert("Peliculas cargadas");
+    Peliculas_arbol.graficar();
+}
+
+function CargarActores(contenido){
+    var datos = JSON.parse(contenido);
+    for (var i = 0; i < datos.length; i++) {
+        arbolAcotres.insertar(datos[i].dni,datos[i].nombre_actor,datos[i].correo,datos[i].descripcion);
+    }
+    arbolAcotres.graficarArbol();
+    alert("Actores cargados");
 }

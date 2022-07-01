@@ -387,4 +387,45 @@ body {
     left: 525px;
   }
   
+  #Lista_Clientes{
+    width: 1400px;
+    height: 1000px;
+    background: #cca000;
+    background-size: cover;
+    margin: auto;
+    margin-top: 50px;
+    box-shadow: 7px 13px 37px #000;
+    padding: 20px 30px;
+    border-top: 4px solid #4e4d4d;
+    color: white;
+    overflow: auto;
+  }
+
+  #Arbol_AVL{
+    width: 1400px;
+    height: 1000px;
+    background: #cca000;
+    background-size: cover;
+    margin: auto;
+    margin-top: 50px;
+    box-shadow: 7px 13px 37px #000;
+    padding: 20px 30px;
+    border-top: 4px solid #4e4d4d;
+    color: white;
+    overflow: auto;
+  }
+
+  #Arbol_Binario{
+    width: 1400px;
+    height: 1000px;
+    background: #cca000;
+    background-size: cover;
+    margin: auto;
+    margin-top: 50px;
+    box-shadow: 7px 13px 37px #000;
+    padding: 20px 30px;
+    border-top: 4px solid #4e4d4d;
+    color: white;
+    overflow: auto;
+  }
   

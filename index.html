@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     
     <link rel="stylesheet" href="styles/estilos.css"> 
-    <link rel="shortcut icon" href="assets/Titulo.png"/>
+    <link rel="shortcut icon" href="imagenes/Titulo.png"/>
 </head>
 <body>
     <!-- LOGIN -->
@@ -38,7 +38,26 @@
                 <input type="radio" name="radio" id="radio1">
                 <div class="tab1">
                     <h2>Cargas Masivas</h2>
-                    
+                    <br></br>
+                    <h5>Carga Masiva Películas</h5>
+                    <br></br>
+                    <input class="form-control" type="file" id="masivaPeliculas" accept=".json">
+                    <br></br>
+                    <br></br>
+                    <h5>Carga Masiva Clientes</h5>
+                    <br></br>
+                    <input class="form-control" type="file" id="masivaClientes" accept=".json">
+                    <br></br>
+                    <br></br>
+                    <h5>Carga Masiva Actores</h5>
+                    <br></br>
+                    <input class="form-control" type="file" id="masivaActores" accept=".json">
+                    <br></br>
+                    <h5>Carga Masiva Categorías</h5>
+                    <br></br>
+                    <input class="form-control" type="file" id="masivaCategorias" accept=".json">
+                    <br></br>
+                    <br></br>
                     <section class="lbl-menu-grafos"> 
                         <label for="radio_peliculas">Grafo Películas</label>
                         <label for="radio_clientes">Grafo clientes</label>
@@ -49,15 +68,17 @@
                         <input type="radio" name="radio-grafos" id="radio_peliculas">
                         <div class="tab4">
                             <h3>Grafo Películas</h3>
+                            <section id="Arbol_AVL"></section>
                         </div>
-                    
                         <input type="radio" name="radio-grafos" id="radio_clientes">
                         <div class="tab5">
                             <h3>Grafo clientes</h3>
+                            <section id="Lista_Clientes"></section>
                         </div>
                         <input type="radio" name="radio-grafos" id="radio_actores">
                         <div class="tab6">
                             <h3>Grafo actores</h3>
+                            <section id="Arbol_Binario"></section>
                         </div>
                         <input type="radio" name="radio-grafos" id="radio_categorias">
                         <div class="tab7">
@@ -75,16 +96,11 @@
                 </div>
             </div>
         </section>
-
-
     </div>
-    
-    
-    
-    <script type="module", src="js/main.js"></script>
     <script src="//d3js.org/d3.v5.min.js"></script>
     <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
     <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
