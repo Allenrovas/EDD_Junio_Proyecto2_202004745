@@ -31,7 +31,7 @@ class Nodo_Pelicula {
 
     obtenerGraphviz(){
         return "digraph grafica{\n" +
-               'rankdir=TB;\n label="Arbol AVL";\nfontsize="50";\n bgcolor="none";\n' +
+               'rankdir=TB;\n label="Arbol AVL";\nfontsize="50";\n'+
                'node [ style=filled , fillcolor=darkgoldenrod2];\n'+
                 this.getCodigoInterno()+
                 "}\n";
@@ -188,7 +188,7 @@ class ListaSimple{
     recorrerMenu(usuario,contrasenia){
         var actual = this.primero;
         while(actual!=null){
-            if(actual.nombre_usuario === usuario && actual.contrasenia === contrasenia){
+            if(actual.nombre_usuario == usuario && actual.contrasenia == contrasenia){
                 return actual;
             }
         }
@@ -197,7 +197,7 @@ class ListaSimple{
     graficar(){
         var contenido = "";
         contenido+= "digraph G {\n"+
-        'bgcolor=\"none\" layout=dot label="Lista_Clientes" \n'+
+        'layout=dot label="Lista_Clientes" \n'+
         "node [shape=square,fontname=\"Century Gothic\", style=filled, color=black, fillcolor=\"darkgoldenrod2\"];\n"
 
         var actual = this.primero;
@@ -250,7 +250,7 @@ class Actor{
 
     obtenerGraphivz(){
         return "digraph grafica{\n" +
-               'rankdir=TB;\n label="Arbol Binario Actores";\nfontsize="50";\n bgcolor="none";\n' +
+               'rankdir=TB;\n label="Arbol Binario Actores";\nfontsize="50";\n'+
                'node [ style=filled , fillcolor=darkgoldenrod2];\n'+
                 this.getCodigoInterno()+
                 "}\n";
@@ -298,6 +298,183 @@ class Arbol{
             .zoom(false);
     } 
 
+}
+
+//Tabla Hash
+
+class Hash{
+    constructor(hash){
+        this.hash = hash;
+        this.siguiente=null;
+        this.abajo=null;
+    }
+}
+
+//Libros Usuarios
+class Categoria{
+    constructor(id_categoria,company){
+        this.id_categoria = id_categoria;
+        this.company = company;
+        this.siguiente=null;
+    }
+}
+
+//ListasUsuarios
+class ListaCategorias{
+    constructor(){
+        this.cabeza = null;
+        this.ultimo = null;
+        this.tamanio = 0;
+    }
+    //Agregar Usuario
+    InsertarHash(hash){
+        var nuevo = new Hash(hash);
+        if(this.cabeza == null){
+            this.cabeza = nuevo;
+            this.ultimo = nuevo;
+            this.tamanio++;
+        }else{
+            this.ultimo.siguiente = nuevo;
+            this.ultimo = nuevo;
+            this.ultimo.siguiente = this.cabeza.siguiente;
+            this.tamanio++;
+        }
+        
+    }
+    //Insertar Libros
+    InsertarCategoria(nombre,usuario){
+        var temporarlusuario = this.cabeza;
+        while(temporarlusuario != null){
+            if (temporarlusuario.nombre_usuario == usuario){
+                var nuevoLibro = new LibrosUsuarios(nombre,usuario);
+                nuevoLibro.cantidad = this.tamanioLibros;
+                var inicioLibros = temporarlusuario.abajo;
+                temporarlusuario.abajo = nuevoLibro;
+                nuevoLibro.siguiente = inicioLibros;
+                this.tamanioLibros++;
+                break;
+            }
+            temporarlusuario = temporarlusuario.siguiente;
+        }
+        
+        //No se encontró usuario
+    }
+    //Buscar Usuario
+    BuscarUsuario(usuario){
+        var actual = this.cabeza;
+        if(actual != null){
+            for (var i = 0; i < this.tamanio; i++) {
+                if(actual.nombre_usuario == usuario){
+                    return actual;
+                }
+                actual = actual.siguiente;
+            }
+        }
+        return null;
+    }
+
+    RecorrerMenu(usuario,contrasenia){
+    let actual = this.cabeza;
+        if(actual != null){
+            for (var i = 0; i < this.tamanio; i++) {
+                if(actual.nombre_usuario == usuario && actual.contrasenia == contrasenia){
+                    return actual;
+                }
+                actual = actual.siguiente;
+            }
+        }
+        return null;
+    }
+
+    imprimirUsuarios(){
+        let actual = this.cabeza;
+        if(actual != null){
+            for (var i = 0; i < this.tamanio; i++) {
+                console.log(actual);
+                actual = actual.siguiente;
+            }
+        }
+    }
+
+    graficarExtra(actual){
+        var nodo = actual;
+        var contenido = "";
+        var Nodos = "";
+        var conexiones = "";
+        contenido += "subgraph cluster_"+nodo.dpi+nodo.nombre_usuario+"{\n"+
+        "style=filled;"+
+        "color=lightgrey;"+
+        "node [style=filled,color=white];";
+        var auxiliar = nodo.abajo;
+        while(auxiliar != null){
+            Nodos += "nodo"+auxiliar.cantidad+nodo.nombre_usuario+'[label=\"'+"Nombre: "+auxiliar.nombre+'\n"];\n';
+            if(auxiliar.siguiente != null){
+                conexiones += "nodo"+auxiliar.cantidad+nodo.nombre_usuario+"->nodo"+auxiliar.siguiente.cantidad+nodo.nombre_usuario+";\n";
+            }
+            auxiliar = auxiliar.siguiente;
+        }
+        contenido += Nodos;
+        contenido += conexiones;
+        contenido += "\n}";
+        return contenido;
+    }
+
+    graficarUsuarios(){
+        var contenido = "";
+        contenido += "digraph G {\n"+
+        'layout=dot label="Lista_Libros" \n'+
+        "node [shape=square,fontname=\"Century Gothic\", style=filled, color=black, fillcolor=\"#f0b35d\"];\n"
+        
+
+
+        var actual = this.cabeza;
+        var nombreNodos = "";
+        var conexiones = "";
+        var UsuarioCabeza = this.cabeza.dpi;
+        var cont = 0;
+        var subgrafo = "";
+        var conexsubgrafo = "";
+        if (actual != null){
+            while(cont < this.tamanio){
+                if(cont == this.tamanio-1){
+                    nombreNodos += "nodo"+actual.dpi+"[fillcolor=\"#f9c74f\" label=\" Nombre: "+ actual.nombre_completo + "\"];\n";
+                    var aux = actual;
+                    if (actual.abajo != null){
+                        subgrafo += this.graficarExtra(actual);
+                        conexsubgrafo += "nodo"+actual.dpi+"->nodo"+actual.abajo.cantidad+actual.nombre_usuario+";\n";
+                    }
+                    break;
+                }else{
+                    nombreNodos += "nodo"+actual.dpi+"[fillcolor=\"#f9c74f\" label=\" Nombre: "+ actual.nombre_completo + "\"];\n";
+                    conexiones += "nodo"+actual.dpi+"->nodo"+actual.siguiente.dpi+";\n";
+                    var aux = actual;
+                    if (actual.abajo != null){
+                        subgrafo += this.graficarExtra(actual);
+                        conexsubgrafo += "nodo"+actual.dpi+"->nodo"+actual.abajo.cantidad+actual.nombre_usuario+";\n";
+                    } 
+                }
+                actual = actual.siguiente;
+                cont++;
+                
+            }
+        }
+        conexiones += "nodo"+aux.dpi+"->nodo"+UsuarioCabeza+";\n";
+        contenido += nombreNodos;
+        contenido += conexiones;
+        contenido += subgrafo;
+        contenido += conexsubgrafo;
+
+        var actual = this.cabeza;
+        var contador = 0;
+        
+        contenido += "rankdir="+'"LR"'+ ";\n";
+        contenido += 'label=\"Lista de Usuarios\"'+";\n";
+        contenido += "}\n";
+        d3.select("#Lista_Listas_Usuarios").graphviz()
+            .width(1200)
+            .height(900)
+            .renderDot(contenido)
+    }
 }
 
 
@@ -410,4 +587,58 @@ function CargarActores(contenido){
     }
     arbolAcotres.graficarArbol();
     alert("Actores cargados");
+}
+
+document.getElementById("btn_regresarAdministracion").onclick=function(){
+    document.getElementById("Login").style.display="block";
+    document.getElementById("Administracion").style.display="none";
+    document.getElementById("Usuario").style.display="none";
+    document.getElementById("usuarioLogin").value = "";
+    document.getElementById("usuarioContra").value = "";
+    
+}
+
+document.getElementById("btn_regresarUsuario").onclick=function(){
+    document.getElementById("Login").style.display="block";
+    document.getElementById("Administracion").style.display="none";
+    document.getElementById("Usuario").style.display="none";
+    document.getElementById("usuarioLogin").value = "";
+    document.getElementById("usuarioContra").value = "";
+    
+}
+
+document.getElementById("btn_descargarAvl").onclick=function(){
+
+    html2canvas(document.querySelector("#Arbol_AVL")).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        var anchor = document.createElement('a');
+        anchor.setAttribute('href', imgData);
+        anchor.setAttribute('download', 'Arbol_AVL.png');
+        anchor.click();
+        anchor.remove();
+    });
+}
+
+document.getElementById("btn_descargarBinario").onclick=function(){
+
+    html2canvas(document.querySelector("#Arbol_Binario")).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        var anchor = document.createElement('a');
+        anchor.setAttribute('href', imgData);
+        anchor.setAttribute('download', 'Arbol_Binario.png');
+        anchor.click();
+        anchor.remove();
+    });
+}
+
+document.getElementById("btn_descargarClientes").onclick=function(){
+
+    html2canvas(document.querySelector("#Lista_Clientes")).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        var anchor = document.createElement('a');
+        anchor.setAttribute('href', imgData);
+        anchor.setAttribute('download', 'Lista_Clientes.png');
+        anchor.click();
+        anchor.remove();
+    });
 }

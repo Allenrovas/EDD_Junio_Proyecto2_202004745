@@ -21,7 +21,6 @@
             <input class="controls" type="password" name="usuarioContra" id="usuarioContra" value="" placeholder="Contraseña">        
             <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_administrador">Administrador</button><br></br>      
             <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_login">Ingresar</button>
-            <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_regresar">Regresar</button>
         </div>
     </div>
 
@@ -30,6 +29,8 @@
     <div id="Administracion" style="display: none;">
 
         <section class="form-administracion">
+            <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_regresarAdministracion">Regresar</button>
+            <br></br>
             <div class="lbl-menu"> 
                 <label for="radio1">Cargas Masivas</label>
                 <label for="radio2">Operaciones Blockchain</label>
@@ -69,20 +70,28 @@
                         <div class="tab4">
                             <h3>Grafo Películas</h3>
                             <section id="Arbol_AVL"></section>
+                            <br></br>
+                            <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_descargarAvl">Descargar Grafo</button>
                         </div>
                         <input type="radio" name="radio-grafos" id="radio_clientes">
                         <div class="tab5">
                             <h3>Grafo clientes</h3>
                             <section id="Lista_Clientes"></section>
+                            <br></br>
+                            <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_descargarClientes">Descargar Grafo</button>
                         </div>
                         <input type="radio" name="radio-grafos" id="radio_actores">
                         <div class="tab6">
                             <h3>Grafo actores</h3>
                             <section id="Arbol_Binario"></section>
+                            <br></br>
+                            <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_descargarBinario">Descargar Grafo</button>
                         </div>
                         <input type="radio" name="radio-grafos" id="radio_categorias">
                         <div class="tab7">
                             <h3>Grafo categorias</h3>
+                            <br></br>
+                            <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_descargarCategorias">Descargar Grafo</button>
                         </div>
                     </section>
 
@@ -91,16 +100,55 @@
                 <div class="tab2">
                     <h2>Operaciones Blockchain</h2>
                     <section class="form-blockchain">
-                        <h5>Op</h5>
+                        <h5>Blockchain</h5>
                     </section>
                 </div>
             </div>
         </section>
     </div>
+
+    <!-- USUARIO -->
+    <div id="Usuario" style="display: none;">
+        <section class="form-usuario">
+            <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_regresarUsuario">Regresar</button>
+            <br></br>
+            <div class="lbl-menuUsuario">
+                <label for="radioPeliculas">Películas</label>
+                <label for="radioActores">Actores</label>
+                <label for="radioCategorias">Categorías</label>
+            </div>
+            <div class="contentUsuario">
+                <input type="radio" name="radioUsuario" id="radioPeliculas">
+                <div class="tabPeliculas">
+                    <h2>Películas</h2>
+                    <section class="form-peliculas">
+                        <h5>Pelis</h5>
+                    </section>
+                </div>
+                <input type="radio" name="radioUsuario" id="radioActores">
+                <div class="tabActores">
+                    <h2>Actores</h2>
+                    <section class="form-actores">
+                        <h5>Actores</h5>
+                    </section>
+                </div>
+                <input type="radio" name="radioUsuario" id="radioCategorias">
+                <div class="tabCategorias">
+                    <h2>Categorías</h2>
+                    <section class="form-categorias">
+                        <h5>Categorías</h5>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
     <script src="//d3js.org/d3.v5.min.js"></script>
     <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
     <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
