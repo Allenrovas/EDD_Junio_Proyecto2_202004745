@@ -59,13 +59,10 @@ class Nodo_Pelicula {
 class Arbol_AVL{
     constructor(){
         this.raiz = null;
-        this.altura1 = 0;
     }
-
     insertar(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q){
         this.raiz = this.insertarNodo(this.raiz,id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q);
     }
-
     insertarNodo(nodo,id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q){
         if(nodo == null){
             nodo = new Nodo_Pelicula(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q);
@@ -93,17 +90,14 @@ class Arbol_AVL{
         nodo.altura = this.mayor(this.altura(nodo.izquierdo),this.altura(nodo.derecho))+1;
         return nodo;
     }
-
     altura(nodo){
         if(nodo == null) return -1;
         return nodo.altura;
     }
-
     mayor(valor1,valor2){
         if(valor1>valor2) return valor1;
         return valor2;
     }
-
     rotacionizquierda(nodo){
         var aux = nodo.izquierdo;
         nodo.izquierdo = aux.derecho;
@@ -127,14 +121,11 @@ class Arbol_AVL{
         nodo.derecho = this.rotacionizquierda(nodo.derecho);
         return this.rotacionderecha(nodo);
     }
-
     //rotaciones dobles
     Rotaciondobleizquierda(nodo){
         nodo.izquierdo = this.rotacionderecha(nodo.izquierdo);
         return this.rotacionizquierda(nodo);
     }
-
-
     graficar(){
         var actual;
         actual = this.raiz;
@@ -145,7 +136,6 @@ class Arbol_AVL{
             .renderDot(hola)
 
     }
-
     inorden(){
         var res =document.querySelector("#tablaPeliculas");
         res.innerHTML = "";
@@ -166,7 +156,6 @@ class Arbol_AVL{
             this.inordenAux(nodo.derecho,respuesta);
         }
     }
-
     descendente(){
         var res =document.querySelector("#tablaPeliculas");
         res.innerHTML = "";
@@ -187,7 +176,6 @@ class Arbol_AVL{
             this.desAux(nodo.izquierdo,respuesta);
         }
     }
-
 }
 
 //Lista Simple Clientes
