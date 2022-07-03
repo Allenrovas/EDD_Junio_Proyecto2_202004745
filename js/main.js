@@ -146,16 +146,45 @@ class Arbol_AVL{
 
     }
 
-    postOrden(){
-        this.postOrdenNodo(this.raiz);
+    inorden(){
+        var res =document.querySelector("#tablaPeliculas");
+        res.innerHTML = "";
+        this.inordenAux(this.raiz,res);
     }
-    postOrdenNodo(nodo){
-        if (nodo != null){
-            
-            this.postOrdenNodo(nodo.izquierdo);
-            
-            console.log(nodo.id_pelicula);
-            this.postOrdenNodo(nodo.derecho);
+    inordenAux(nodo,res){
+        var respuesta = res;
+        if(nodo != null){
+            this.inordenAux(nodo.izquierdo,respuesta);
+            respuesta.innerHTML +=
+            "<tr>"+
+                "<td>"+nodo.nombre_pelicula+"</td>"+
+                "<td>"+nodo.descripcion+"</td>"+
+                "<td></td>"+
+                "<td></td>"+
+                "<td>"+nodo.precio_Q+"</td>"+
+            "</tr>";
+            this.inordenAux(nodo.derecho,respuesta);
+        }
+    }
+
+    descendente(){
+        var res =document.querySelector("#tablaPeliculas");
+        res.innerHTML = "";
+        this.desAux(this.raiz,res);
+    }
+    desAux(nodo,res){
+        var respuesta = res;
+        if(nodo != null){
+            this.desAux(nodo.derecho,respuesta);
+            respuesta.innerHTML +=
+            "<tr>"+
+                "<td>"+nodo.nombre_pelicula+"</td>"+
+                "<td>"+nodo.descripcion+"</td>"+
+                "<td></td>"+
+                "<td></td>"+
+                "<td>"+nodo.precio_Q+"</td>"+
+            "</tr>";
+            this.desAux(nodo.izquierdo,respuesta);
         }
     }
 
@@ -191,6 +220,7 @@ class ListaSimple{
             if(actual.nombre_usuario == usuario && actual.contrasenia == contrasenia){
                 return actual;
             }
+            actual = actual.siguiente;
         }
     }
 
@@ -296,7 +326,61 @@ class Arbol{
         d3.select("#Arbol_Binario").graphviz()
             .renderDot(hola)
             .zoom(false);
-    } 
+    }
+    inorden(){
+        var res =document.querySelector("#tablaActores");
+        res.innerHTML = "";
+        this.inordenAux(this.raiz,res);
+    }
+    inordenAux(nodo,res){
+        var respuesta = res;
+        if(nodo != null){
+            this.inordenAux(nodo.izquierda,respuesta);
+            respuesta.innerHTML +=
+            "<tr>"+
+                "<td>"+nodo.nombre_actor+"</td>"+
+                "<td>"+nodo.descripcion+"</td>"+
+            "</tr>";
+            this.inordenAux(nodo.derecha,respuesta);
+        }
+    }
+    postorden(){
+        var res =document.querySelector("#tablaActores");
+        res.innerHTML = "";
+        this.postordenAux(this.raiz,res);
+    }
+    postordenAux(nodo,res){
+        var respuesta = res;
+        if(nodo != null){
+            this.postordenAux(nodo.izquierda,respuesta);
+            this.postordenAux(nodo.derecha,respuesta);
+            respuesta.innerHTML +=
+            "<tr>"+
+                "<td>"+nodo.nombre_actor+"</td>"+
+                "<td>"+nodo.descripcion+"</td>"+
+            "</tr>";
+        }
+    }
+    preorden(){
+        var res =document.querySelector("#tablaActores");
+        res.innerHTML = "";
+        this.preordenAux(this.raiz,res);
+    }
+    preordenAux(nodo,res){
+        var respuesta = res;
+        if(nodo != null){
+            respuesta.innerHTML +=
+            "<tr>"+
+                "<td>"+nodo.nombre_actor+"</td>"+
+                "<td>"+nodo.descripcion+"</td>"+
+            "</tr>";
+            this.preordenAux(nodo.izquierda,respuesta);
+            this.preordenAux(nodo.derecha,respuesta);
+        }
+    }
+
+    
+
 
 }
 
@@ -323,10 +407,9 @@ class Categoria{
 class ListaCategorias{
     constructor(){
         this.cabeza = null;
-        this.ultimo = null;
         this.tamanio = 0;
     }
-    //Agregar Usuario
+    //Agregar Hash
     InsertarHash(hash){
         var nuevo = new Hash(hash);
         if(this.cabeza == null){
@@ -342,59 +425,34 @@ class ListaCategorias{
         
     }
     //Insertar Libros
-    InsertarCategoria(nombre,usuario){
-        var temporarlusuario = this.cabeza;
-        while(temporarlusuario != null){
-            if (temporarlusuario.nombre_usuario == usuario){
-                var nuevoLibro = new LibrosUsuarios(nombre,usuario);
-                nuevoLibro.cantidad = this.tamanioLibros;
-                var inicioLibros = temporarlusuario.abajo;
-                temporarlusuario.abajo = nuevoLibro;
-                nuevoLibro.siguiente = inicioLibros;
-                this.tamanioLibros++;
-                break;
+    InsertarCategoria(id_categoria,company){
+        var temporal = this.cabeza;
+        valor = id_categoria%20;
+        while(temporal != null){
+            if (temporal.hash == valor){
+                var temporal2 = temporal.abajo;
+                if(temporal2 != null){
+                    while(temporal2.siguiente != null){
+                        if(temporal2.id_categoria == id_categoria){
+                            console.log("La categoría ya existe");
+                            return;
+                        }
+                        temporal2 = temporal2.siguiente;
+                    }
+                }else{
+                    var nueva = new Categoria(id_categoria,company);
+                    var inicio = temporal.abajo;
+                    temporal.abajo = nueva;
+                    nueva.siguiente = inicio;
+                    break;
+                }
             }
-            temporarlusuario = temporarlusuario.siguiente;
+            temporal = temporal.siguiente;
         }
         
         //No se encontró usuario
     }
-    //Buscar Usuario
-    BuscarUsuario(usuario){
-        var actual = this.cabeza;
-        if(actual != null){
-            for (var i = 0; i < this.tamanio; i++) {
-                if(actual.nombre_usuario == usuario){
-                    return actual;
-                }
-                actual = actual.siguiente;
-            }
-        }
-        return null;
-    }
 
-    RecorrerMenu(usuario,contrasenia){
-    let actual = this.cabeza;
-        if(actual != null){
-            for (var i = 0; i < this.tamanio; i++) {
-                if(actual.nombre_usuario == usuario && actual.contrasenia == contrasenia){
-                    return actual;
-                }
-                actual = actual.siguiente;
-            }
-        }
-        return null;
-    }
-
-    imprimirUsuarios(){
-        let actual = this.cabeza;
-        if(actual != null){
-            for (var i = 0; i < this.tamanio; i++) {
-                console.log(actual);
-                actual = actual.siguiente;
-            }
-        }
-    }
 
     graficarExtra(actual){
         var nodo = actual;
@@ -482,6 +540,8 @@ var listaClientes = new ListaSimple();
 var arbolAcotres = new Arbol();
 var Peliculas_arbol = new Arbol_AVL();
 
+listaClientes.insertarCliente(2354168452525,"Wilfred Perez","EDD","wilfred@gmail.com","123","+502 (123) 123-4567");
+
 document.getElementById('masivaPeliculas').addEventListener('change', leerArchivoPeliculas, false);
 document.getElementById('masivaClientes').addEventListener('change', leerArchivoClientes, false);
 document.getElementById('masivaActores').addEventListener('change', leerArchivoActores, false);
@@ -492,8 +552,8 @@ document.getElementById("btn_login").onclick = function(){
     var contrasenia = document.getElementById("usuarioContra").value;
     var usuario = listaClientes.recorrerMenu(nombre_usuario,contrasenia);
     if(usuario != null){
-        document.getElementById("PaginaUsuario").style.display="block";
         document.getElementById("Login").style.display="none";
+        document.getElementById("Usuario").style.display="block";
     }else{
         alert("Usuario o contraseña incorrectos");
     }
@@ -578,6 +638,7 @@ function CargarPeliculas(contenido){
     }
     alert("Peliculas cargadas");
     Peliculas_arbol.graficar();
+    Peliculas_arbol.inorden();
 }
 
 function CargarActores(contenido){
@@ -586,6 +647,7 @@ function CargarActores(contenido){
         arbolAcotres.insertar(datos[i].dni,datos[i].nombre_actor,datos[i].correo,datos[i].descripcion);
     }
     arbolAcotres.graficarArbol();
+    arbolAcotres.inorden();
     alert("Actores cargados");
 }
 
@@ -641,4 +703,21 @@ document.getElementById("btn_descargarClientes").onclick=function(){
         anchor.click();
         anchor.remove();
     });
+}
+
+document.getElementById("btn_ascendentePelis").onclick=function(){
+    Peliculas_arbol.inorden();
+}
+document.getElementById("btn_descendentePelis").onclick=function(){
+    Peliculas_arbol.descendente();
+}
+
+document.getElementById("btn_inOrdenActores").onclick=function(){
+    arbolAcotres.inorden();
+}
+document.getElementById("btn_preOrdenActores").onclick=function(){
+    arbolAcotres.preorden();
+}
+document.getElementById("btn_postOrdenActores").onclick=function(){
+    arbolAcotres.postorden();
 }

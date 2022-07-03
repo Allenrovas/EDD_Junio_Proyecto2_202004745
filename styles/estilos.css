@@ -100,7 +100,7 @@ body {
     tbody{
       font-family: bahnschrift;
       font-size: 12px;
-      color : #4e4d4d;
+      color : white;
       background: 1px solid #4e4d4d;
       text-align: center;
       padding: 8px;
@@ -143,7 +143,7 @@ body {
 
   .form-usuario {
     width: 1200px;
-    height: 500px;
+    height: 475px;
     background: #4e4d4d;
     margin: auto;
     margin-top: 50px;
@@ -427,5 +427,82 @@ body {
     border-top: 4px solid #4e4d4d;
     color: white;
     overflow: auto;
+  }
+
+  .contentUsuario{ 
+    position: relative;
+  }
+  .contentUsuario div{
+    position: absolute;
+    line-height: 1.8;
+    transition: all 600ms ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.90);
+    padding: 30px;
+    background: #4e4d4d;
+    padding-bottom: 40px;
+  }
+
+  .lbl-menuUsuario{
+    background: #ffc800;
+  }
+
+  .lbl-menuUsuario label{
+    display: inline-block;
+    padding: 20px;
+    color: white;
+    cursor: pointer;
+    transition: all 400ms ease;
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    
+  }
+
+  .lbl-menuUsuario label:hover{
+    background: #d9aa00;
+  }
+
+  #radioPeliculas,#radioActores,#radioCategorias{
+    display: none;
+  }
+
+  #radioPeliculas:checked ~ .tabPeliculas{
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+  }
+
+  #radioActores:checked ~ .tabActores{
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+  }
+  #radioCategorias:checked ~ .tabCategorias{
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+  }
+
+  .contentUsuario div::after{
+    position: absolute;
+    content: "";
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #4e4d4d;
+    border-top: 10px 2solid transparent;
+    bottom: 100%;
+    left: 28px;
+  }
+
+  .contentUsuario .tabPeliculas:after{
+    left: 25px;
+  }
+
+  .contentUsuario .tabActores:after{
+    left: 145px;
+  }
+
+  .contentUsuario .tabCategorias:after{
+    left: 275px;
   }
   

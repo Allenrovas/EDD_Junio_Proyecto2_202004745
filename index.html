@@ -121,15 +121,48 @@
                 <input type="radio" name="radioUsuario" id="radioPeliculas">
                 <div class="tabPeliculas">
                     <h2>Películas</h2>
+                    <br></br>
+                        <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_ascendentePelis">Ascendente</button>
+                    <br></br>
+                        <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_descendentePelis">Descendente</button>
+                    <br></br>
+                    <table tex-align="center">
+                        <thead>
+                            <tr>
+                                <th colspan="1"style="background-color: #cca000; color: white;">Título</th>
+                                <th colspan="1"style="background-color: #cca000; color: white;">Descripción</th>
+                                <th colspan="1"style="background-color: #cca000; color: white;">Información</th>
+                                <th colspan="1"style="background-color: #cca000; color: white;">Alquilar</th>
+                                <th colspan="1"style="background-color: #cca000; color: white;">Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaPeliculas"></tbody>
+                    </table>
                     <section class="form-peliculas">
-                        <h5>Pelis</h5>
                     </section>
                 </div>
                 <input type="radio" name="radioUsuario" id="radioActores">
                 <div class="tabActores">
                     <h2>Actores</h2>
+                    
+                    <br></br>
+                        <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_inOrdenActores">In Orden</button>
+                    <br></br>
+                        <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_preOrdenActores">Pre Orden</button>
+                    <br></br>
+                        <button class="btn btn-primary btn-xl text-uppercase"  type="submit" name=""  id="btn_postOrdenActores">Post Orden</button>
+                    <br></br>
+                    <table tex-align="center">
+                        <thead>
+                            <tr>
+                                <th colspan="1"style="background-color: #cca000; color: white;">Nombre</th>
+                                <th colspan="1"style="background-color: #cca000; color: white;">Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaActores"></tbody>
+                    </table>
+
                     <section class="form-actores">
-                        <h5>Actores</h5>
                     </section>
                 </div>
                 <input type="radio" name="radioUsuario" id="radioCategorias">
